@@ -1,0 +1,35 @@
+version: '3.7'
+
+services:
+
+  nodeJS:
+    image: node:carbon
+
+
+  mysql_db:
+    image: mysql:latest
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=T32ds2ccv!5
+      - MYSQL_DATABASE=link_shortener
+      - MYSQL_USER=link
+      - MYSQL_PASSWORD=qwerty
+    ports:
+      - 3306:3306
+      - 33060:33060
+#    volumes:
+#      - ./resources/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  web:
+    image: linkshortener/link-shortener:latest
+    ports:
+      - 8080:8080
+    restart: always
+    depends_on:
+      - mysql_db
+    environment:
+      - DATABASE_HOST=mysql_db
+      - DATABASE_USER=link
+      - DATABASE_PASSWORD=qwerty
+      - DATABASE_NAME=link_shortener
+      - DATABASE_PORT=3306

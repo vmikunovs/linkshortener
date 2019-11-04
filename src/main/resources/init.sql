@@ -1,0 +1,2 @@
+CREATE SCHEMA IF NOT EXISTS link_shortener11;
+CREATE SCHEMA IF NOT EXISTS link_shortener2;
