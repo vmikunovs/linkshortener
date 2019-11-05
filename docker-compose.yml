@@ -2,10 +2,6 @@ version: '3.7'
 
 services:
 
-  nodeJS:
-    image: node:carbon
-
-
   mysql_db:
     image: mysql:latest
     restart: always

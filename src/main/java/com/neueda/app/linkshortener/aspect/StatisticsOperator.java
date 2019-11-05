@@ -2,8 +2,10 @@ package com.neueda.app.linkshortener.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.stereotype.Component;
 
 @Aspect
+@Component
 public class StatisticsOperator {
     @Pointcut("execution(* com.neueda.app.linkshortener.service.ShortUrlService.makeShorter(..))")
     public void makeShorter(){}//pointcut name

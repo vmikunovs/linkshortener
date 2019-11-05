@@ -29,4 +29,12 @@ public class ShortUrl extends IdEntity {
     public String getOriginalUrl() {
         return originalUrl;
     }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setOriginalUrl(String originalUrl) {
+        this.originalUrl = originalUrl;
+    }
 }

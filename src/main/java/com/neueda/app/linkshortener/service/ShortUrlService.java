@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 public class ShortUrlService {
     public static final String URL_PATTERN = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 
-    private ShortUrlRepository shortUrlRepository;
     private EncoderService encoderService;
+    private ShortUrlRepository shortUrlRepository;
 
     @Autowired
     public void setEncoderService(EncoderService encoderService) {
@@ -22,6 +22,7 @@ public class ShortUrlService {
         this.shortUrlRepository = shortUrlRepository;
     }
 
+    //@AspectAnnotation
     public ShortUrl makeShorter(String originalUrl) {
         originalUrl = originalUrl.trim();
         if (!isUrlValid(originalUrl)) {
@@ -36,8 +37,7 @@ public class ShortUrlService {
 
         String encode = encoderService.encode(originalUrl);
 
-        shortUrl = shortUrlRepository.save(new ShortUrl(encode, originalUrl));
-        return shortUrl;
+        return shortUrlRepository.save(new ShortUrl(encode, originalUrl));
     }
 
     protected boolean isUrlValid(String url) {
