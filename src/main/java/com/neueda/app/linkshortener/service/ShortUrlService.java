@@ -2,12 +2,16 @@ package com.neueda.app.linkshortener.service;
 
 import com.neueda.app.linkshortener.domain.shortUrl.ShortUrl;
 import com.neueda.app.linkshortener.domain.shortUrl.ShortUrlRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.net.URL;
+
 @Service
 public class ShortUrlService {
-    public static final String URL_PATTERN = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
     private EncoderService encoderService;
     private ShortUrlRepository shortUrlRepository;
@@ -22,7 +26,6 @@ public class ShortUrlService {
         this.shortUrlRepository = shortUrlRepository;
     }
 
-    //@AspectAnnotation
     public ShortUrl makeShorter(String originalUrl) {
         originalUrl = originalUrl.trim();
         if (!isUrlValid(originalUrl)) {
@@ -36,12 +39,20 @@ public class ShortUrlService {
         }
 
         String encode = encoderService.encode(originalUrl);
-
-        return shortUrlRepository.save(new ShortUrl(encode, originalUrl));
+        //ToDo check generator
+        shortUrl = new ShortUrl(encode, originalUrl);
+        shortUrl = shortUrlRepository.save(shortUrl);
+        log.info("make new short url from: " + shortUrl.getOriginalUrl() + " uuid: " + shortUrl.getUuid());
+        return shortUrl;
     }
 
-    protected boolean isUrlValid(String url) {
-        return url.matches(URL_PATTERN);
+    boolean isUrlValid(String url) {
+        try {
+            new URL(url).toURI();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public String getOriginalUrl(String url) {

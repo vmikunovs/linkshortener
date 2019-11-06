@@ -1,17 +1,17 @@
-var shortUrlApi = Vue.resource('/api{/url}');
+const shortUrlApi = Vue.resource('/short{/uuid}');
+const statisticApi = Vue.resource('/statistic{/uuid}');
 
 Vue.component('short-url-form', {
     props: ['shortUrl, shortUrlAttr'],
     data: function () {
         return {
-            id: '',
-            url: '',
+            uuid: '',
             originalUrl: '',
         }
     },
     watch: {
         shortUrlAttr: function (newVal, oldVal) {
-            this.url = newVal.url;
+            this.uuid = newVal.uuid;
             this.originalUrl = newVal.originalUrl;
         }
     },
@@ -19,12 +19,12 @@ Vue.component('short-url-form', {
         '<div>' +
             '<input type="text"  style=" width: 280px;" placeholder="Enter you url" v-model="originalUrl" />' +
             '<input type="button" value="Shorten" @click="shorten" /> '  +
-            '<a :href="url"> {{ url }} </a>' +
+            '<a :href="uuid" target="_blank"> {{ uuid }} </a>' +
         '</div>',
     methods: {
         shorten: function () {
             const shortUrl = {
-                url: this.url,
+                uuid: this.uuid,
                 originalUrl: this.originalUrl,
             };
 
@@ -32,8 +32,7 @@ Vue.component('short-url-form', {
                 result.json().then(data => {
                     this.shortUrl = data;
                     this.originalUrl = data.originalUrl;
-                    this.url = window.location.host + '/api/' + data.url;
-                //this.originalUrl = data.originalUrl;
+                    this.uuid = 'http://' + window.location.host + '/short/' + data.uuid;
             })
             )
 
@@ -41,7 +40,7 @@ Vue.component('short-url-form', {
     }
 });
 
-var app = new Vue({
+const app = new Vue({
    el: '#app',
     template: '<short-url-form  :shortUrl="shortUrl" />',
    data: {

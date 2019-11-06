@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Repository
 public class ShortUrlRepository {
@@ -17,11 +16,11 @@ public class ShortUrlRepository {
         this.em = em;
     }
 
-    public ShortUrl findByShortUrl(String shortUrl) {
+    public ShortUrl findByShortUrl(String uuid) {
         JPAQuery<Void> query = new JPAQuery<>(em);
         JPAQuery<ShortUrl> where = query.select(QShortUrl.shortUrl)
                 .from(QShortUrl.shortUrl)
-                .where(QShortUrl.shortUrl.url.eq(shortUrl));
+                .where(QShortUrl.shortUrl.uuid.eq(uuid));
         return where.fetchOne();
     }
 
@@ -35,11 +34,14 @@ public class ShortUrlRepository {
 
     @Transactional
     public ShortUrl save(ShortUrl shortUrl) {
-        if(shortUrl.getId() == -1) {
             em.persist(shortUrl);
-        } else {
             shortUrl = em.merge(shortUrl);
-        }
+        return shortUrl;
+    }
+
+    @Transactional
+    public ShortUrl update(ShortUrl shortUrl) {
+        shortUrl = em.merge(shortUrl);
         return shortUrl;
     }
 }

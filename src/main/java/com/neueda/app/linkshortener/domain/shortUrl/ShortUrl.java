@@ -1,6 +1,6 @@
 package com.neueda.app.linkshortener.domain.shortUrl;
 
-import com.neueda.app.linkshortener.domain.IdEntity;
+import com.neueda.app.linkshortener.domain.UuidEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,30 +8,20 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "short_urls")
-public class ShortUrl extends IdEntity {
-    @Column(unique = true, nullable = false)
-    private String url;
-    @Column(name = "original_url", unique = true, nullable = false)
+public class ShortUrl extends UuidEntity {
+    @Column(name = "original_url")
     private String originalUrl;
 
     public ShortUrl() {
     }
 
-    public ShortUrl(String shortUrl, String originalUrl) {
-        this.url = shortUrl;
+    public ShortUrl(String uuid, String originalUrl) {
+        super(uuid);
         this.originalUrl = originalUrl;
-    }
-
-    public String getUrl() {
-        return url;
     }
 
     public String getOriginalUrl() {
         return originalUrl;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public void setOriginalUrl(String originalUrl) {
