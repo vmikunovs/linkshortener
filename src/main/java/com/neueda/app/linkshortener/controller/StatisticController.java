@@ -1,6 +1,6 @@
 package com.neueda.app.linkshortener.controller;
 
-import com.neueda.app.linkshortener.domain.statistic.ShortUrlStatistic;
+import com.neueda.app.linkshortener.domain.statistics.ShortUrlStatistic;
 import com.neueda.app.linkshortener.service.statistic.StatisticModel;
 import com.neueda.app.linkshortener.service.statistic.StatisticService;
 import org.slf4j.Logger;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/statistic")
+@RequestMapping("/statistics")
 public class StatisticController {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -31,8 +31,13 @@ public class StatisticController {
     }
 
     @GetMapping("/top/{count}")
-    public List<ShortUrlStatistic> getTopOfShortUrl(@PathVariable Long count) {
+    public List<ShortUrlStatistic> getTopOfShortUrl(@PathVariable Integer count) {
         log.info("call the top of the first {} positions", count);
         return statisticService.getTop(count);
+    }
+
+    @GetMapping("/all")
+    public List<ShortUrlStatistic> fullStatistics() {
+        return statisticService.getFullStatistic();
     }
 }

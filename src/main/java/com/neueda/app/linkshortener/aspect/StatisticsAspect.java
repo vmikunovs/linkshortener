@@ -20,7 +20,11 @@ public class StatisticsAspect {
 
     @AfterReturning(pointcut = "execution(* com.neueda.app.linkshortener.service.ShortUrlService.makeShorter(..))", returning="returnValue")
     public void makeShorterUrl(JoinPoint jp, ShortUrl returnValue) {
-        statisticService.logMakeShortUrl(returnValue.getOriginalUrl());
+        statisticService.logMakeShortUrl(returnValue.getUuid());
     }
 
+    @AfterReturning(pointcut = "execution(* com.neueda.app.linkshortener.controller.ShortUrlController.getOriginalUrl(..))", returning="returnValue")
+    public void redirectAmount(JoinPoint jp, ShortUrl returnValue) {
+        statisticService.logMakeShortUrl(returnValue.getUuid());
+    }
 }

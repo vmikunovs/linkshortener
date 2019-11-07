@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "short_urls")
 public class ShortUrl extends UuidEntity {
-    @Column(name = "original_url")
+    @Column(name = "original_url", nullable = false)
     private String originalUrl;
 
     public ShortUrl() {

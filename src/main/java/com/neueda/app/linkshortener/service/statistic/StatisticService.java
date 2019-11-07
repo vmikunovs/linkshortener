@@ -1,43 +1,56 @@
 package com.neueda.app.linkshortener.service.statistic;
 
-import com.neueda.app.linkshortener.domain.statistic.ShortUrlStatistic;
-import com.neueda.app.linkshortener.domain.statistic.ShortUrlStatisticDslRepository;
-import com.neueda.app.linkshortener.domain.statistic.ShortUrlStatisticRepository;
+import com.neueda.app.linkshortener.domain.statistics.ShortUrlStatistic;
+import com.neueda.app.linkshortener.domain.statistics.ShortUrlStatisticExtendRepository;
+import com.neueda.app.linkshortener.domain.statistics.ShortUrlStatisticModel;
+import com.neueda.app.linkshortener.domain.statistics.ShortUrlStatisticRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StatisticService {
-    private ShortUrlStatisticDslRepository shortUrlStatisticDslRepository;
     private ShortUrlStatisticRepository shortUrlStatisticRepository;
+    private ShortUrlStatisticExtendRepository extendRepository;
 
     @Autowired
-    public void setShortUrlStatisticDslRepository(ShortUrlStatisticDslRepository shortUrlStatisticDslRepository) {
-        this.shortUrlStatisticDslRepository = shortUrlStatisticDslRepository;
+    public void setExtendRepository(ShortUrlStatisticExtendRepository extendRepository) {
+        this.extendRepository = extendRepository;
+    }
+
+    @Autowired
+    public void setShortUrlStatisticRepository(ShortUrlStatisticRepository shortUrlStatisticRepository) {
+        this.shortUrlStatisticRepository = shortUrlStatisticRepository;
     }
 
     public StatisticModel getStatistic() {
         return new StatisticModel();
     }
 
-    public void logMakeShortUrl(String url) {
-        ShortUrlStatistic shortUrlStatistic = shortUrlStatisticDslRepository.findByUrl(url);
-        if (shortUrlStatistic == null) {
-            shortUrlStatistic = new ShortUrlStatistic(url);
-        }
+    public void logMakeShortUrl(String uuid) {
+        Optional<ShortUrlStatistic> optional = shortUrlStatisticRepository.findById(uuid);
+        ShortUrlStatistic shortUrlStatistic = optional.orElseGet(() -> new ShortUrlStatistic(uuid));
 
-        //ToDo insert on duplicate key and update
-        shortUrlStatistic.incrementMakeCount();
-        shortUrlStatisticDslRepository.save(shortUrlStatistic);
+        shortUrlStatistic.incrementLinkCreationCount();
+        shortUrlStatisticRepository.save(shortUrlStatistic);
     }
 
-    public List<ShortUrlStatistic> getTop(Long count) {
+    public List<ShortUrlStatistic> getTop(Integer count) {
         if (count == null) {
             throw new IllegalArgumentException("wrong top count: " + count);
         }
 
-        return shortUrlStatisticDslRepository.findTop(count);
+        Page<ShortUrlStatistic> urlStatisticPage = shortUrlStatisticRepository.findAll(PageRequest.of(0, count, Sort.by("makeCount").descending()));
+        return urlStatisticPage.getContent();
+    }
+
+    public List<ShortUrlStatistic> getFullStatistic() {
+        List<ShortUrlStatisticModel> shortUrlStatistics = extendRepository.getShortUrlStatistics();
+        return shortUrlStatisticRepository.findAll();
     }
 }

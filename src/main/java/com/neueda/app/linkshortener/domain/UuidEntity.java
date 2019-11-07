@@ -11,14 +11,15 @@ public abstract class UuidEntity implements Serializable {
 	@Column(unique = true, nullable = false, length = 32)
 	private String uuid;
 
-	public String getUuid() {
-		return uuid;
-	}
-
 	public UuidEntity() {
 	}
+
 	public UuidEntity(String uuid) {
 		this.uuid = uuid;
+	}
+
+	public String getUuid() {
+		return uuid;
 	}
 
 	@Override

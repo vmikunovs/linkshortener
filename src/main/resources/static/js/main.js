@@ -1,5 +1,4 @@
 const shortUrlApi = Vue.resource('/short{/uuid}');
-const statisticApi = Vue.resource('/statistic{/uuid}');
 
 Vue.component('short-url-form', {
     props: ['shortUrl, shortUrlAttr'],

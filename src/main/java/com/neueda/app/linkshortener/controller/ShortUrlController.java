@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.transaction.Transactional;
+
 @RestController()
 @RequestMapping("/short")
 public class ShortUrlController {
@@ -26,6 +28,7 @@ public class ShortUrlController {
         return new RedirectView(shortUrlService.getOriginalUrl(url));
     }
 
+    @Transactional
     @PostMapping
     public ShortUrl makeShortUrl(@RequestBody String url) {
         return shortUrlService.makeShorter(url);
