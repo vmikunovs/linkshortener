@@ -38,10 +38,4 @@ public class ShortUrlRepository {
             shortUrl = em.merge(shortUrl);
         return shortUrl;
     }
-
-    @Transactional
-    public ShortUrl update(ShortUrl shortUrl) {
-        shortUrl = em.merge(shortUrl);
-        return shortUrl;
-    }
 }
