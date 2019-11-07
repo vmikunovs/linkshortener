@@ -1,33 +1,5 @@
 package com.neueda.app.linkshortener.domain.statistics;
 
-import com.neueda.app.linkshortener.domain.shortUrl.ShortUrl;
-
-import javax.persistence.*;
-
-//@Entity
-//@SqlResultSetMappings({
-//        @SqlResultSetMapping(
-//                name = "ShortUrlStatisticMapping",
-//                classes = @ConstructorResult(
-//                        targetClass = ShortUrlStatistic.class,
-//                        columns = {
-//                                @ColumnResult(name = "uuid"),
-//                                @ColumnResult(name = "linkCreationCount", type = long.class),
-//                                @ColumnResult(name = "redirectAmount", type = long.class)
-//                        }
-//                )
-//        ),
-//        @SqlResultSetMapping(
-//                name = "ShortUrlMapping",
-//                classes = @ConstructorResult(
-//                        targetClass = ShortUrl.class,
-//                        columns = {
-//                                @ColumnResult(name = "uuid"),
-//                                @ColumnResult(name = "originalUrl", type = String.class),
-//                        }
-//                )
-//        )
-//})
 public class ShortUrlStatisticModel {
     private String uuid;
     private String originalUrl;

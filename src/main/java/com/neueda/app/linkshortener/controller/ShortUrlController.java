@@ -2,7 +2,6 @@ package com.neueda.app.linkshortener.controller;
 
 import com.neueda.app.linkshortener.domain.shortUrl.ShortUrl;
 import com.neueda.app.linkshortener.service.ShortUrlService;
-import com.neueda.app.linkshortener.service.statistic.StatisticService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +23,8 @@ public class ShortUrlController {
     }
 
     @GetMapping("/{uuid}")
-    public RedirectView getOriginalUrl(@PathVariable String url) {
-        return new RedirectView(shortUrlService.getOriginalUrl(url));
+    public RedirectView getOriginalUrl(@PathVariable String uuid) {
+        return new RedirectView(shortUrlService.getOriginalUrl(uuid));
     }
 
     @Transactional

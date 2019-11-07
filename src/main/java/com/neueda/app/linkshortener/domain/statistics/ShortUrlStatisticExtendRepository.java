@@ -20,4 +20,17 @@ public class ShortUrlStatisticExtendRepository {
                 "ShortUrlStatisticModel(sus.uuid, su.originalUrl, sus.linkCreationCount, sus.redirectAmount) " +
                 "FROM ShortUrlStatistic sus LEFT JOIN ShortUrl su ON sus.uuid = su.uuid").getResultList();
     }
+
+
+    public List<ShortUrlStatisticModel> getTopLinkCreationCount(int limit) {
+        return em.createQuery("SELECT NEW com.neueda.app.linkshortener.domain.statistics." +
+                "ShortUrlStatisticModel(sus.uuid, su.originalUrl, sus.linkCreationCount, sus.redirectAmount) " +
+                "FROM ShortUrlStatistic sus LEFT JOIN ShortUrl su ON sus.uuid = su.uuid ORDER BY sus.linkCreationCount DESC").setMaxResults(limit).getResultList();
+    }
+
+    public List<ShortUrlStatisticModel> getTopLinkRedirect(int limit) {
+        return em.createQuery("SELECT NEW com.neueda.app.linkshortener.domain.statistics." +
+                "ShortUrlStatisticModel(sus.uuid, su.originalUrl, sus.linkCreationCount, sus.redirectAmount) " +
+                "FROM ShortUrlStatistic sus LEFT JOIN ShortUrl su ON sus.uuid = su.uuid ORDER BY sus.redirectAmount DESC").setMaxResults(limit).getResultList();
+    }
 }

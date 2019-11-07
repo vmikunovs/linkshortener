@@ -11,7 +11,4 @@ import java.util.List;
 @Repository
 public interface ShortUrlStatisticRepository extends JpaRepository<ShortUrlStatistic, String> {
     Page<ShortUrlStatistic> findAll(Pageable pageable);
-
-   /* @Query("SELECT s FROM ShortUrlStatistic s LEFT JOIN FETCH s.uuid ON ShortUrl WHERE s.uuid = (:uuid)")
-    List<ShortUrlStatistic> findAllByUuid(String uuid);*/
 }

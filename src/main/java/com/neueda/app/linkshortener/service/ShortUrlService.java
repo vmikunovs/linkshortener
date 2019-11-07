@@ -39,7 +39,7 @@ public class ShortUrlService {
         }
 
         String encode = encoderService.encode(originalUrl);
-        //ToDo check generator
+
         shortUrl = new ShortUrl(encode, originalUrl);
         shortUrl = shortUrlRepository.save(shortUrl);
         log.info("make new short url from: " + shortUrl.getOriginalUrl() + " uuid: " + shortUrl.getUuid());
@@ -55,8 +55,8 @@ public class ShortUrlService {
         }
     }
 
-    public String getOriginalUrl(String url) {
-        ShortUrl shortUrl = shortUrlRepository.findByShortUrl(url);
+    public String getOriginalUrl(String uuid) {
+        ShortUrl shortUrl = shortUrlRepository.findByShortUrl(uuid);
         if (shortUrl == null) {
             throw new NullPointerException("short url: ");
         }

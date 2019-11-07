@@ -6,8 +6,8 @@ import org.hibernate.annotations.SQLInsert;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "short_url_statistic")
-@SQLInsert(sql = "INSERT INTO short_url_statistic(link_creation_count, redirect_amount, uuid) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE link_creation_count = link_creation_count + 1")
+@Table(name = "short_url_statistics")
+@SQLInsert(sql = "INSERT INTO short_url_statistics(link_creation_count, redirect_amount, uuid) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE link_creation_count = link_creation_count + 1")
 public class ShortUrlStatistic extends UuidEntity {
     @Column(name = "link_creation_count")
     private long linkCreationCount;
