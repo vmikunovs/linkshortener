@@ -17,9 +17,11 @@ spring:
       enabled:      ALWAYS
 logging:
   level:
-    root:           info
-    eu:
-      fairyhills:   DEBUG
+    root:           WARN
+    com:
+      neueda:
+        app:
+          linkshortener:  info
   pattern:
     file: '%d{yyyy.MM.dd HH:mm:ss} %-5level [%thread] %logger{15} - %msg%n'
     console: '%d{yyyy.MM.dd HH:mm:ss} %-5level [%thread] %logger{15} - %msg%n'

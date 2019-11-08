@@ -24,12 +24,14 @@ public class ShortUrlController {
 
     @GetMapping("/{uuid}")
     public RedirectView getOriginalUrl(@PathVariable String uuid) {
+        log.info("call redirect by uuid: {}", uuid);
         return new RedirectView(shortUrlService.getOriginalUrl(uuid));
     }
 
     @Transactional
     @PostMapping
     public ShortUrl makeShortUrl(@RequestBody String url) {
+        log.info("makeShortUrl by url: {}", url);
         return shortUrlService.makeShorter(url);
     }
 }

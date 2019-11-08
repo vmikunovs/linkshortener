@@ -65,13 +65,13 @@ public class ShortUrlServiceTest {
         ShortUrl toBeReturned = new ShortUrl();
         toBeReturned.setOriginalUrl(originalUrl);
 
-        doReturn(toBeReturned).when(shortUrlRepository).findByShortUrl(anyString());
+        doReturn(toBeReturned).when(shortUrlRepository).findByUuid(anyString());
         Assert.assertEquals(originalUrl, shortUrlService.getOriginalUrl(anyString()));
     }
 
     @Test(expected = NullPointerException.class)
     public void test_getOriginalUrlNull() {
-        doReturn(null).when(shortUrlRepository).findByShortUrl(anyString());
+        doReturn(null).when(shortUrlRepository).findByUuid(anyString());
         shortUrlService.getOriginalUrl(anyString());
     }
 

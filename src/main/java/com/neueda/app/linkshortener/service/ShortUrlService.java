@@ -56,7 +56,7 @@ public class ShortUrlService {
     }
 
     public String getOriginalUrl(String uuid) {
-        ShortUrl shortUrl = shortUrlRepository.findByShortUrl(uuid);
+        ShortUrl shortUrl = shortUrlRepository.findByUuid(uuid);
         if (shortUrl == null) {
             throw new NullPointerException("short url: ");
         }

@@ -2,31 +2,26 @@
 <html lang="en">
 <head>
     <title>Admin Panel</title>
-
     <meta charset="UTF-8">
 
     <link rel="icon" type="image/png" sizes="16x16" href="images/icons/favicon.png">
-
-    <!-- development version, includes helpful console warnings -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
-    <!--    &lt;!&ndash; production version, optimized for size and speed &ndash;&gt;
-        <script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
 </head>
 <body>
 <h3>URL shortener</h3>
 <div id="app"></div>
 <div>
-    <h3>API</h3>
+    <h3>statistics API</h3>
     <ol>
         <li>
-            <a href="http://localhost:8080/statistics/top/creationCount/10" target="_blank">http://localhost:8080/statistics/top/creationCount/10</a>
+            <a href="http://localhost:8080/statistics/top/creationCount/10" target="_blank">top 10 of make short url</a>
         </li>
         <li>
-            <a href="http://localhost:8080/statistics/top/redirectAmount/8" target="_blank">http://localhost:8080/statistics/top/redirectAmount/8</a>
+            <a href="http://localhost:8080/statistics/top/redirectAmount/8" target="_blank">top 8 of redirect</a>
         </li>
         <li>
-            <a href="http://localhost:8080/statistics/all" target="_blank">http://localhost:8080/statistics/all</a>
+            <a href="http://localhost:8080/statistics/all" target="_blank">get all statistics</a>
         </li>
     </ol>
 </div>

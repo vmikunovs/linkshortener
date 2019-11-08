@@ -6,29 +6,31 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public class ShortUrlRepository {
     private EntityManager em;
+    private QShortUrl qShortUrl = QShortUrl.shortUrl;
 
     @Autowired
     public void setEm(EntityManager em) {
         this.em = em;
     }
 
-    public ShortUrl findByShortUrl(String uuid) {
+    public ShortUrl findByUuid(String uuid) {
         JPAQuery<Void> query = new JPAQuery<>(em);
-        JPAQuery<ShortUrl> where = query.select(QShortUrl.shortUrl)
-                .from(QShortUrl.shortUrl)
-                .where(QShortUrl.shortUrl.uuid.eq(uuid));
+        JPAQuery<ShortUrl> where = query.select(qShortUrl)
+                .from(qShortUrl)
+                .where(qShortUrl.uuid.eq(uuid));
         return where.fetchOne();
     }
 
     public ShortUrl findByOriginalUrl(String originalUrl) {
         JPAQuery<Void> query = new JPAQuery<>(em);
-        JPAQuery<ShortUrl> where = query.select(QShortUrl.shortUrl)
-                .from(QShortUrl.shortUrl)
-                .where(QShortUrl.shortUrl.originalUrl.eq(originalUrl));
+        JPAQuery<ShortUrl> where = query.select(qShortUrl)
+                .from(qShortUrl)
+                .where(qShortUrl.originalUrl.eq(originalUrl));
         return where.fetchOne();
     }
 
@@ -37,5 +39,12 @@ public class ShortUrlRepository {
             em.persist(shortUrl);
             shortUrl = em.merge(shortUrl);
         return shortUrl;
+    }
+
+    public List<ShortUrl> findAll() {
+        JPAQuery<Void> query = new JPAQuery<>(em);
+        JPAQuery<ShortUrl> where = query.select(qShortUrl)
+                .from(qShortUrl);
+        return where.fetch();
     }
 }

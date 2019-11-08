@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/statistics")
 public class StatisticsController {
-    private Logger log = LoggerFactory.getLogger(this.getClass());
+    private static Logger log = LoggerFactory.getLogger(StatisticsController.class);
 
     private StatisticsService statisticsService;
 
@@ -26,18 +26,19 @@ public class StatisticsController {
 
     @GetMapping("/top/creationCount/{count}")
     public List<ShortUrlStatisticModel> getTopOfShortUrlLinkCreation(@PathVariable Integer count) {
-        log.info("call the top of the first {} positions", count);
+        log.info("call getTopOfShortUrlLinkCreation {} positions", count);
         return statisticsService.getTopLinkCreation(count);
     }
 
     @GetMapping("/top/redirectAmount/{count}")
     public List<ShortUrlStatisticModel> getTopOfShortUrlRedirect(@PathVariable Integer count) {
-        log.info("call the top of the first {} positions", count);
+        log.info("call getTopOfShortUrlRedirect {} positions", count);
         return statisticsService.getTopLinkRedirect(count);
     }
 
     @GetMapping("/all")
     public List<ShortUrlStatisticModel> fullStatistics() {
+        log.info("call fullStatistics");
         return statisticsService.getFullStatistic();
     }
 }

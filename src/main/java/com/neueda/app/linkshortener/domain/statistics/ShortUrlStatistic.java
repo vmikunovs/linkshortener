@@ -22,6 +22,14 @@ public class ShortUrlStatistic extends UuidEntity {
         this.redirectAmount = 0;
     }
 
+    public void setLinkCreationCount(long linkCreationCount) {
+        this.linkCreationCount = linkCreationCount;
+    }
+
+    public void setRedirectAmount(long redirectAmount) {
+        this.redirectAmount = redirectAmount;
+    }
+
     public long getLinkCreationCount() {
         return linkCreationCount;
     }
